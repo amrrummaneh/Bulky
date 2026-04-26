@@ -28,7 +28,7 @@ namespace BulkyWeb.Controllers
             {
                 ModelState.AddModelError("name", "The Display Order cannot exactly match the Name.");
             }
-            if (obj.Name.ToLower() == "test")
+            if (obj.Name!= null && obj.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "Test an invalid value ");
             }
