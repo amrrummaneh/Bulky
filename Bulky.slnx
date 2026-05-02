@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="BulkyWeb/BulkyWeb.csproj" />
+  <Project Path="BulkyWebRazor_Temp/BulkyWebRazor_Temp.csproj" Id="b77b06b3-89e4-48cf-8f1b-c1c8dcfaea88" />
 </Solution>
