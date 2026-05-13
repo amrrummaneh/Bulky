@@ -60,10 +60,19 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
                 if (file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString()
-                                      + Path.GetExtension(file.FileName);
-
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"images\products");
+
+                    if(!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        //delete the old image
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                                System.IO.File.Delete(oldImagePath);
+                        }
+                    }
 
                     using (var fileStream = new FileStream(
                         Path.Combine(productPath, fileName),
@@ -81,7 +90,16 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     productVM.Product.ImageUrl = "default.jpg";
                 }
 
-                _unitOfWork.Product.Add(productVM.Product);
+                if (productVM.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
+
+               
                 _unitOfWork.save();
 
                 TempData["success"] = "Product created successfully";
