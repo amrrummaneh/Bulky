@@ -1,4 +1,5 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
+using Bulky.Models;
 using Bulky.Utility;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
@@ -91,7 +92,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
@@ -100,9 +101,9 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
 
-            if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                //it is a regular customer account and we need to capture payment
+                //it is a regular customer 
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
                 ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
             }
@@ -127,9 +128,21 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 _unitOfWork.save();
             }
 
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                //it is a regular customer account and we need to capture payment
+                //stripe logic
+            }
 
-            return View(ShoppingCartVM);
+            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
+
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
+        }
+
 
         public IActionResult Plus(int cartId)
         {
