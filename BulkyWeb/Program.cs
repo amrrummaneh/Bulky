@@ -38,7 +38,10 @@ builder.Services.AddSession(options => {
     options.Cookie.IsEssential = true;
 });
 
-
+builder.Services.AddAuthentication().AddFacebook(option => {
+    option.AppId = "1317407897169098";
+    option.AppSecret = "678c4aad761d268cbb5758bd0e8ce1ad";
+});
 
 
 var app = builder.Build();
