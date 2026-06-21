@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using Stripe;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -99,6 +100,35 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _unitOfWork.save();
             TempData["Success"] = "Order Shipped Successfully.";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+        }
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult CancelOrder()
+        {
+
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+
+            if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+            {
+                var options = new RefundCreateOptions
+                {
+                    Reason = RefundReasons.RequestedByCustomer,
+                    PaymentIntent = orderHeader.PaymentIntentId
+                };
+
+                var service = new RefundService();
+                Refund refund = service.Create(options);
+
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusRefunded);
+            }
+            else
+            {
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
+            }
+            _unitOfWork.save();
+            TempData["Success"] = "Order Cancelled Successfully.";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+
         }
 
 
