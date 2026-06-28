@@ -117,10 +117,16 @@
 
 @section Scripts{
     <script>
-        tinymce.init({
+                tinymce.init({
             selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons  lists   table visualblocks wordcount',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough |  align lineheight | numlist bullist indent outdent',
+            license_key: 'gpl',  
+            plugins: 'anchor autolink charmap codesample emoticons lists table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | numlist bullist indent outdent',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
         });
     </script>
     @{

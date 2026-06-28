@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
+
 namespace BulkyWeb.Areas.Admin.Controllers
 
 {
@@ -124,6 +125,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return View(productVM);
             }
         }
+
+
         public IActionResult DeleteImage(int imageId)
         {
             var imageToBeDeleted = _unitOfWork.ProductImage.Get(u => u.Id == imageId);
@@ -151,7 +154,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Upsert), new { id = productId });
         }
 
-
         #region API CALLS
 
         [HttpGet]
@@ -171,14 +173,20 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            //var oldImagePath =
-            //               Path.Combine(_webHostEnvironment.WebRootPath, 
-            //               productToBeDeleted.ImageUrl.TrimStart('\\'));
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            //if (System.IO.File.Exists(oldImagePath))
-            //{
-            //    System.IO.File.Delete(oldImagePath);
-            //}
+            if (Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                Directory.Delete(finalPath);
+            }
+
 
             _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.save();
@@ -187,6 +195,5 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         #endregion
-    
-}
+    }
 }
