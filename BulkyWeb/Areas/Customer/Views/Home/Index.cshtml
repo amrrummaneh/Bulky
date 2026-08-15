@@ -36,6 +36,31 @@
             </div>
         }
     </div>
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <nav class="d-flex justify-content-center mt-4">
+            <ul class="pagination">
+
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link text-success" asp-action="Index" asp-route-productPage="@(ViewBag.CurrentPage - 1)">&laquo;</a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link @(i == ViewBag.CurrentPage ? "bg-success border-success" : "text-success")"
+                           asp-action="Index" asp-route-productPage="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link text-success" asp-action="Index" asp-route-productPage="@(ViewBag.CurrentPage + 1)">&raquo;</a>
+                </li>
+
+            </ul>
+        </nav>
+    }
 </div>
 
 <style>
@@ -44,10 +69,10 @@
         border: 1px solid #e6f2e9;
     }
 
-    .product-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 0.75rem 1.5rem rgba(0, 128, 0, 0.12) !important;
-    }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.75rem 1.5rem rgba(0, 128, 0, 0.12) !important;
+        }
 
     .product-img-wrapper {
         height: 220px;

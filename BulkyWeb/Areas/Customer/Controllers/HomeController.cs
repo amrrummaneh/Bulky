@@ -24,12 +24,23 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int productPage = 1)
         {
-
+            int pageSize = 6;
 
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
-            return View(productList);
+
+            var totalProducts = productList.Count();
+            var totalPages = (int)Math.Ceiling(totalProducts / (double)pageSize);
+
+            var pagedProducts = productList
+                .Skip((productPage - 1) * pageSize)
+                .Take(pageSize);
+
+            ViewBag.CurrentPage = productPage;
+            ViewBag.TotalPages = totalPages;
+
+            return View(pagedProducts);
         }
 
         public IActionResult Details(int productId)
@@ -43,8 +54,6 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return View(cart);
         }
 
-        [HttpPost]
-        [Authorize]
         [HttpPost]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
