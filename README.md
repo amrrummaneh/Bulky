@@ -91,21 +91,6 @@ This separation keeps the data access logic decoupled from the presentation laye
 
 The database is seeded automatically on first run with an admin account (see `DbInitializer`).
 
-## Project Structure
-
-```
-Bulky/
-├── Bulky.Models/          # Entities and ViewModels
-├── Bulky.DataAccess/      # DbContext, Migrations, Repository, Unit of Work
-├── Bulky.Utility/         # Shared constants and settings
-└── BulkyWeb/
-    ├── Areas/
-    │   ├── Admin/         # Admin panel (Products, Categories, Companies, Orders, Users)
-    │   ├── Customer/      # Storefront (Home, Cart)
-    │   └── Identity/      # Login, Register, Account management
-    └── ViewComponents/    # Shopping cart component
-```
-
 ## Notes
 
 This project was built as a learning exercise to apply N-Tier architecture, the Repository/Unit of Work pattern, and payment integration in a realistic setting, rather than as a production deployment.
