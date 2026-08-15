@@ -42,15 +42,15 @@ This separation keeps the data access logic decoupled from the presentation laye
 
 | Customer Home | Product Management |
 |---|---|
-| ![Customer Home](/customer-home.png) | ![Product Management](/admin-products.png) |
+| ![Customer Home](customer-home.png) | ![Product Management](admin-products.png) |
 
 | Shopping Cart | 
 |---|---|
-| ![Shopping Cart](/cart.png) | 
+| ![Shopping Cart](cart.png) | 
 
 | Order Details |
 |---|---|
-| ![Order Details](screenshots/order-details.png) |
+| ![Order Details](order-details.png) |
 
 ## Getting Started
 
