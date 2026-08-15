@@ -40,14 +40,17 @@ This separation keeps the data access logic decoupled from the presentation laye
 
 ## Screenshots for Project Homepages
 
-<img width="1918" height="891" alt="image" src="https://github.com/user-attachments/assets/87a6c024-bb8f-4874-9c1e-ed46f6c7a176" />
+| Customer Home | Product Management |
+|---|---|
+| ![Customer Home](screenshots/customer-home.png) | ![Product Management](screenshots/admin-products.png) |
 
-<img width="1074" height="774" alt="image" src="https://github.com/user-attachments/assets/cdb3e781-b460-4b2c-8a99-59b886d1f213" />
+| Shopping Cart | Checkout |
+|---|---|
+| ![Shopping Cart](screenshots/cart.png) | ![Checkout](screenshots/checkout.png) |
 
-<img width="1648" height="694" alt="image" src="https://github.com/user-attachments/assets/b222a98f-b0f0-4320-aa6a-ac04a3f502c7" />
-
-<img width="1205" height="722" alt="image" src="https://github.com/user-attachments/assets/90726e3e-3138-4a93-8e1c-8679a535ff52" />
-
+| User Management | Order Details |
+|---|---|
+| ![User Management](screenshots/user-management.png) | ![Order Details](screenshots/order-details.png) |
 
 ## Getting Started
 
