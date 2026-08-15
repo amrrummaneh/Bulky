@@ -42,10 +42,9 @@ builder.Services.AddSession(options => {
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddAuthentication().AddFacebook(option => {
-    option.AppId = "1317407897169098";
-    option.AppSecret = "678c4aad761d268cbb5758bd0e8ce1ad";
+    option.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+    option.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
 });
-
 
 var app = builder.Build();
 
