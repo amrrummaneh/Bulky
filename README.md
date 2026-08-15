@@ -38,16 +38,6 @@ This separation keeps the data access logic decoupled from the presentation laye
 - Stripe API
 - Bootstrap
 
-## Screenshots for Project Homepages
-
-
-| Customer Home | Product Management |
-|---|---|
-| ![Customer Home](customer-home.png) | ![Product Management](admin-products.png) |
-
-| Shopping Cart | Order Details |
-|---|---|
-| ![Shopping Cart](cart.png) | ![Order Details](order-details.png) |
 ## Getting Started
 
 ### Prerequisites
